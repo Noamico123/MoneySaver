@@ -1,3 +1,3 @@
 firebase_config = {
-
+"s"
 }
