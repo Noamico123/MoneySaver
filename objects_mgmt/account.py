@@ -1,4 +1,4 @@
-from Models.models import Account, Partner
+from models.models import Account, Partner
 
 
 class AccountMGMT:

@@ -1,9 +1,11 @@
-from account import AccountMGMT
-from categories import CategoriesMGMT
-from partner import PartnerMGMT
 
-if __name__ == '__main__':
+from objects_mgmt.account import AccountMGMT
+from objects_mgmt.categories import CategoriesMGMT
+from firebase_auth import sign_up, login
+from objects_mgmt.partner import PartnerMGMT
 
+
+def test_functionality():
     categories = CategoriesMGMT.init_base_categories()
 
     first_partner = PartnerMGMT.create_partner(name="Bob")
@@ -56,3 +58,14 @@ if __name__ == '__main__':
     print(f'\ntotal_expense  {first_account.total_expense}')
     print(f'\ntotal_income  {first_account.total_income}')
     print(f'\ncurrent_amount  {first_account.current_amount}')
+
+
+if __name__ == '__main__':
+
+    answer = input('new user? [y/n]')
+
+    if answer == 'y':
+        sign_up()
+
+    if answer == 'n':
+        login()

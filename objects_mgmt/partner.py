@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from Models.models import Category, Income, Expense, Partner, Account
+from models.models import Category, Income, Expense, Partner, Account
 
 
 class PartnerMGMT:
