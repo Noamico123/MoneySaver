@@ -1,3 +1,5 @@
+from typing import Dict
+
 import pyrebase
 import requests
 
@@ -9,7 +11,7 @@ firebase = pyrebase.initialize_app(firebase_config)
 auth = firebase.auth()
 
 
-def sign_up() -> bool:
+def is_sign_up() -> bool:
     email = input('Enter email: ')
     password = input('Enter password: ')
 
@@ -30,15 +32,15 @@ def sign_up() -> bool:
     return False
 
 
-def login() -> bool:
+def is_logged_in() -> Dict:
     email = input('Enter email: ')
     password = input('Enter password: ')
 
     try:
-        auth.sign_in_with_email_and_password(email, password)
+        login = auth.sign_in_with_email_and_password(email, password)
         print(f'Successfully logged in')
-        print(f'{auth.get_account_info(["id_token"])}')
-        return True
+
+        return auth.get_account_info(login["idToken"])
 
     except requests.exceptions.HTTPError as exc:
         if INVALID_EMAIL in exc.strerror:
@@ -49,6 +51,6 @@ def login() -> bool:
             print(INVALID_PASSWORD)
 
     except Exception as e:
-        print('Could not log in that account')
+        print(f'Could not log in that account \n{e}')
 
-    return False
+    return {}

@@ -1,23 +1,35 @@
 import uuid
 from datetime import datetime
 
-from models.models import Category, Income, Expense, Partner, Account
+from models.models import Category, Income, Expense, User, Account
 
 
-class PartnerMGMT:
+class UserMGMT:
 
     @staticmethod
-    def create_partner(name: str) -> Partner:
-        return Partner(
-            id=str(uuid.uuid4()),
+    def create_partner(name: str) -> User:
+        return User(
+            id='',
             name=name,
+            email='',
             incomes=[],
             expenses=[],
             accounts=[]
         )
 
     @staticmethod
-    def add_income_to_partner(partner: Partner, name: str, income_sum: int) -> Partner:
+    def create_partner2(user_id: str, email: str) -> User:
+        return User(
+            id=user_id,
+            name='',
+            email=email,
+            incomes=[],
+            expenses=[],
+            accounts=[]
+        )
+
+    @staticmethod
+    def add_income_to_partner(partner: User, name: str, income_sum: int) -> User:
         partner.incomes.append(
             Income(
                 name=name,
@@ -28,8 +40,8 @@ class PartnerMGMT:
         return partner
 
     @staticmethod
-    def add_expense_to_partner(partner: Partner, name: str, expense_sum: float, description: str, is_permanent: bool,
-                               category: Category) -> Partner:
+    def add_expense_to_partner(partner: User, name: str, expense_sum: float, description: str, is_permanent: bool,
+                               category: Category) -> User:
         partner.expenses.append(
             Expense(
                 name=name,
@@ -43,7 +55,7 @@ class PartnerMGMT:
         return partner
 
     @staticmethod
-    def add_account_to_partner(partner: Partner, account: Account) -> Partner:
+    def add_account_to_partner(partner: User, account: Account) -> User:
         partner.accounts.append(account)
 
         return partner

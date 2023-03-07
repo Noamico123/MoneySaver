@@ -3,12 +3,6 @@ from datetime import datetime
 from typing import List, Dict
 
 
-# @dataclass(frozen=False)
-# class LoginDetails:
-#     email: str = None
-#     password: str = None
-
-
 @dataclass(frozen=False)
 class Category:
     name: str = None
@@ -33,8 +27,8 @@ class Income:
 
 @dataclass(frozen=False)
 class Account:
+    id: str = None
     name: str = None
-    number_of_partners: int = 0
     partners: List[Dict[str, str]] = None
     total_income: float = 0
     total_expense: float = 0
@@ -42,10 +36,10 @@ class Account:
 
 
 @dataclass(frozen=False)
-class Partner:
+class User:
     id: str = None
     name: str = None
-    # login_details: LoginDetails = None
+    email: str = None
     incomes: List[Income] = None
     expenses: List[Expense] = None
     accounts: List[Account] = None

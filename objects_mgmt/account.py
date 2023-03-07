@@ -1,13 +1,12 @@
-from models.models import Account, Partner
+from models.models import Account, User
 
 
 class AccountMGMT:
 
     @staticmethod
-    def create_account(name: str, number_of_partners: int) -> Account:
+    def create_account(name: str) -> Account:
         return Account(
             name=name,
-            number_of_partners=number_of_partners,
             partners=[],
             total_income=0,
             total_expense=0,
@@ -30,7 +29,7 @@ class AccountMGMT:
         return account
 
     @staticmethod
-    def add_partner_to_account(account: Account, partner: Partner) -> Account:
+    def add_partner_to_account(account: Account, partner: User) -> Account:
         account.partners.append({partner.id: partner.name})
         return account
 

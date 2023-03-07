@@ -1,27 +1,28 @@
+from typing import Dict
 
+from consts import ID, EMAIL, USERS
 from objects_mgmt.account import AccountMGMT
 from objects_mgmt.categories import CategoriesMGMT
-from firebase_auth import sign_up, login
-from objects_mgmt.partner import PartnerMGMT
+from firebase_auth import is_sign_up, is_logged_in
+from objects_mgmt.user import UserMGMT
 
 
 def test_functionality():
     categories = CategoriesMGMT.init_base_categories()
 
-    first_partner = PartnerMGMT.create_partner(name="Bob")
+    first_partner = UserMGMT.create_partner(name="Bob")
 
     first_account = AccountMGMT.create_account(
         name="MyAccount",
-        number_of_partners=1
     )
 
     AccountMGMT.add_partner_to_account(account=first_account, partner=first_partner)
-    PartnerMGMT.add_account_to_partner(partner=first_partner, account=first_account)
+    UserMGMT.add_account_to_partner(partner=first_partner, account=first_account)
 
     print(f'\n##1##\n{first_partner}')
     print(f'\n##1##\n{first_account}')
 
-    PartnerMGMT.add_income_to_partner(partner=first_partner, name="Work", income_sum=10000)
+    UserMGMT.add_income_to_partner(partner=first_partner, name="Work", income_sum=10000)
 
     for income in first_partner.incomes:
         AccountMGMT.add_income_to_account(account=first_account, income=income.income_sum)
@@ -29,7 +30,7 @@ def test_functionality():
     print(f'\n##2##\n{first_partner}')
     print(f'\n##2##\n{first_account}')
 
-    PartnerMGMT.add_expense_to_partner(
+    UserMGMT.add_expense_to_partner(
         partner=first_partner,
         name="shopping",
         description="",
@@ -38,7 +39,7 @@ def test_functionality():
         is_permanent=False,
     )
 
-    PartnerMGMT.add_expense_to_partner(
+    UserMGMT.add_expense_to_partner(
         partner=first_partner,
         name="gas",
         description="",
@@ -60,12 +61,45 @@ def test_functionality():
     print(f'\ncurrent_amount  {first_account.current_amount}')
 
 
-if __name__ == '__main__':
+def test2(user_id: str, email: str):
 
+    first_partner = UserMGMT.create_partner2(
+        user_id=user_id,
+        email=email
+    )
+
+    print(f'\n# {first_partner}')
+
+
+def init_app() -> Dict:
     answer = input('new user? [y/n]')
 
     if answer == 'y':
-        sign_up()
+        if is_sign_up():
+            return is_logged_in()
+
+        else:
+            return {}
 
     if answer == 'n':
-        login()
+        return is_logged_in()
+
+
+if __name__ == '__main__':
+    res = init_app()
+
+    if not res:
+        print('An error occurred')
+
+    else:
+        users = res.get(USERS)
+
+        if len(users) == 1:
+            email = users[0].get(EMAIL)
+            user_id = users[0].get(ID)
+            print(f'# ID: {user_id} \n# Email: {email}')
+            # test2(user_id=user_id, email=email)
+
+
+
+
